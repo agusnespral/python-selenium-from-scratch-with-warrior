@@ -1,0 +1,31 @@
+# === Core Selenium dependencies ===
+selenium>=4.12.0             # Web automation library
+webdriver-manager>=4.0.0     # Automatically handles browser driver downloads
+
+# === Testing framework ===
+pytest>=7.4.0                # Test runner
+pytest-xdist>=3.3.1          # Parallel test execution
+pytest-html>=3.2.0           # Generates HTML test reports
+pytest-rerunfailures>=11.1.2 # Retry failed tests
+
+# === Environment configuration ===
+python-dotenv>=1.0.0         # Load environment variables from .env file
+
+# === Logging and debugging (optional but useful) ===
+loguru>=0.7.2                # Elegant logging with minimal setup
+
+# === Screenshot/Image tools (optional) ===
+Pillow>=10.0.0               # For image manipulation (e.g. saving screenshots)
+
+# === Advanced test reporting (optional) ===
+allure-pytest>=2.13.2        # Generate Allure reports
+
+# === HTTP requests (if API checks or setup are needed) ===
+requests>=2.31.0             # For making HTTP requests (e.g., API setup or validation)
+
+# === Typing and static analysis (optional, for better code quality) ===
+typing-extensions>=4.8.0     # Backport for newer typing features (if needed)
+
+# === Code formatting/linting (optional but highly recommended in a team) ===
+black>=24.3.0                # Auto code formatter
+flake8>=6.1.0                # Code linter
