@@ -26,6 +26,11 @@ requests>=2.31.0             # For making HTTP requests (e.g., API setup or vali
 # === Typing and static analysis (optional, for better code quality) ===
 typing-extensions>=4.8.0     # Backport for newer typing features (if needed)
 
-# === Code formatting/linting (optional but highly recommended in a team) ===
+# === Code formatting and linting (optional but highly recommended in a team) ===
 black>=24.3.0                # Auto code formatter
 flake8>=6.1.0                # Code linter
+ruff>=0.0.300                # Ultra-fast Python linter to check code quality and style
+
+# === Git hooks and config parsing ===
+pre-commit>=3.3.3            # Framework to manage Git hooks for running tasks before commits
+pyyaml>=6.0                  # Library to parse and write YAML files, commonly used for configs
