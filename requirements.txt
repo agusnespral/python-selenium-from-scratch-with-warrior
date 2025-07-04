@@ -7,6 +7,7 @@ pytest>=7.4.0                # Test runner
 pytest-xdist>=3.3.1          # Parallel test execution
 pytest-html>=3.2.0           # Generates HTML test reports
 pytest-rerunfailures>=11.1.2 # Retry failed tests
+pytest-asyncio>=0.20.0       # Async driver
 
 # === Environment configuration ===
 python-dotenv>=1.0.0         # Load environment variables from .env file
@@ -30,6 +31,7 @@ typing-extensions>=4.8.0     # Backport for newer typing features (if needed)
 black>=24.3.0                # Auto code formatter
 flake8>=6.1.0                # Code linter
 ruff>=0.0.300                # Ultra-fast Python linter to check code quality and style
+isort>=5.12.0
 
 # === Git hooks and config parsing ===
 pre-commit>=3.3.3            # Framework to manage Git hooks for running tasks before commits

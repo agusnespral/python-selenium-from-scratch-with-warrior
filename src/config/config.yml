@@ -1,0 +1,15 @@
+#browser
+browser: chrome # chrome, firefox, edge, remote (Docker needs to be installed locally)
+maximize: true # true, false
+seeVNC: true # true, false --> only applicable for remote --> this allows to open a browser and see the test
+mobile: false # true, false
+headless: false # true, false -- for PIM it needs to be false for now
+tearDown: true # true, false
+screenshots:
+format: .png
+
+# Env config (qa, staging, prod)
+env: qa
+
+# This file is meant to be used with the YML helper. End of file
+
