@@ -4,10 +4,9 @@ from dataclasses import dataclass
 import pytest
 import pytest_asyncio
 
-from src.helpers.browser_driver_helper import (
-    BrowserDriverHelperAsync,
-    BrowserDriverHelperSync,
-)
+from src.helpers.browser_driver_helper import (BrowserDriverHelperAsync,
+                                               BrowserDriverHelperSync)
+from src.helpers.screenshot_helper import ScreenshotHelper
 
 
 @dataclass
@@ -43,3 +42,29 @@ async def browser_async():
     await helper.get_driver()
     yield helper.driver
     await helper.quit_driver()
+
+
+@pytest.fixture(scope="function")
+def screenshot_helper():
+    return ScreenshotHelper()
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    print("\n--- Ejecutando hookwrapper pytest_runtest_makereport ---")
+    outcome = yield
+    report = outcome.get_result()
+
+    if report.when == "call" and report.failed:
+        print(
+            f"Test '{item.name}' falló en la fase 'call'. Intentando tomar captura..."
+        )
+        driver = item.funcargs.get("browser_sync")
+        screenshot_helper = item.funcargs.get("screenshot_helper")
+        print(f"Driver objeto: {driver}")
+
+        print(f"ScreenshotHelper objeto: {screenshot_helper}")
+
+        if driver and screenshot_helper:
+            print("Driver y screenshot_helper disponibles.")
+            screenshot_helper.take_screenshot(driver, item.name, "failed")

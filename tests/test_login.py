@@ -12,10 +12,13 @@ load_dotenv()
 base_url = os.getenv("BASE_URL")
 
 
-def test_login(browser_sync, get_credentials):
+def test_login(browser_sync, get_credentials, screenshot_helper):
+
+    user = get_credentials.username
+    pwd = get_credentials.password
     browser_sync.get(base_url)
     login_page = LoginPage(browser_sync)
-    login_page.submit_login(get_credentials.username, get_credentials.password)
+    login_page.submit_login(user, pwd)
 
 
 @pytest.mark.asyncio
