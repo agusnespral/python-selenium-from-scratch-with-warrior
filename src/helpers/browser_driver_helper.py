@@ -7,7 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-
+from src.helpers.logger_helper import LoggerHelper
 
 class BrowserDriverHelperSync:
     def __init__(self):
@@ -50,6 +50,9 @@ class BrowserDriverHelperSync:
         # Driver instance
         self.driver = None
 
+        # Logger
+        self.logger = LoggerHelper.get_instance()
+        self.logger.info("BrowserDriverHelperSync initialized.")
     def load_config(self):
         """Load configuration from a YAML file."""
         with open(self.config_path, "r") as file:
@@ -93,6 +96,8 @@ class BrowserDriverHelperSync:
         """Closes the browser if tearDown is enabled."""
         if self.driver and self.tear_down:
             self.driver.quit()
+        self.logger.info("BrowserDriverHelperSync closed.")
+
 
 
 class BrowserDriverHelperAsync:

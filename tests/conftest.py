@@ -7,6 +7,7 @@ import pytest_asyncio
 from src.helpers.browser_driver_helper import (BrowserDriverHelperAsync,
                                                BrowserDriverHelperSync)
 from src.helpers.screenshot_helper import ScreenshotHelper
+from src.helpers.logger_helper import LoggerHelper
 
 
 @dataclass
@@ -33,7 +34,7 @@ def browser_sync():
     helper = BrowserDriverHelperSync()
     driver = helper.get_driver()
     yield driver
-    driver.quit()
+    helper.quit_driver()
 
 
 @pytest_asyncio.fixture(scope="function")
@@ -51,20 +52,44 @@ def screenshot_helper():
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
-    print("\n--- Ejecutando hookwrapper pytest_runtest_makereport ---")
+    print("\n--- Executing hookwrapper pytest_runtest_makereport ---")
     outcome = yield
     report = outcome.get_result()
+    logger = LoggerHelper.get_instance()
 
-    if report.when == "call" and report.failed:
-        print(
-            f"Test '{item.name}' falló en la fase 'call'. Intentando tomar captura..."
-        )
-        driver = item.funcargs.get("browser_sync")
-        screenshot_helper = item.funcargs.get("screenshot_helper")
-        print(f"Driver objeto: {driver}")
+    if report.when == "call":
+        if report.failed:
+            logger.error(f"--- RESULT: {item.nodeid} [FAILED] ---")
+            print(
+                f"Test '{item.name}' failed in call phase. Taking screenshot..."
+            )
+            driver = item.funcargs.get("browser_sync")
+            screenshot_helper = item.funcargs.get("screenshot_helper")
+            print(f"Driver objeto: {driver}")
 
-        print(f"ScreenshotHelper objeto: {screenshot_helper}")
+            print(f"ScreenshotHelper object: {screenshot_helper}")
 
-        if driver and screenshot_helper:
-            print("Driver y screenshot_helper disponibles.")
-            screenshot_helper.take_screenshot(driver, item.name, "failed")
+            if driver and screenshot_helper:
+                print("Driver and screenshot_helper available.")
+                screenshot_helper.take_screenshot(driver, item.name, "failed")
+        elif report.passed:
+            logger.info(f"--- RESULT: {item.nodeid} [PASSED] ---")
+
+
+@pytest.fixture(scope="session")
+def logger():
+    return LoggerHelper.get_instance()
+
+
+def pytest_runtest_protocol(item, nextitem):
+    """
+    Hook executed before each test starts.
+    Logs the test start time and name.
+    """
+    logger = LoggerHelper.get_instance()
+
+    if logger:
+        # Log the start of the test using the full node ID (file::test_name)
+        logger.info(f"--- STARTING TEST: {item.nodeid} ---")
+
+
