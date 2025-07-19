@@ -12,4 +12,13 @@ pip install -r requirements.txt
 7. Install pre-commit (Framework to manage Git hooks for running tasks before 
 commits), create .pre-commit-config.yaml and run pre-commit install
 8. Install PyYAML (Library to parse and write YAML files, commonly used for configs)
-9. 
+9. Create config.yml (YML helper) for browser config
+10. conftest.py
+10. Create browser_driver_helper.py and add to conftest.py
+11. Create logger_helper.py and add to conftest.py
+12. Install allure-pytest (Generate Allure reports)
+    add pytest.ini `addopts = --alluredir=allure-results` for generating Allure reports
+    Generate the report:
+    allure serve allure-results
+    (this launches a local server with the interactive report)
+13. 
