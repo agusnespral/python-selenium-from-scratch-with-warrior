@@ -6,13 +6,13 @@ from dotenv import load_dotenv
 
 from src.main.pages.login_page import LoginPage
 
-# Load environment variables from a .env file into the system environment variables
+# Load environment variables from a .env.stg file into the system environment variables
 load_dotenv()
 
 base_url = os.getenv("BASE_URL")
 
 
-def test_login(browser_sync, get_credentials, screenshot_helper):
+def test_login(browser_sync, get_credentials, screenshot_helper, ):
 
     user = get_credentials.username
     pwd = get_credentials.password

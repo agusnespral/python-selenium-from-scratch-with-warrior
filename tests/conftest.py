@@ -8,6 +8,17 @@ from src.helpers.browser_driver_helper import (BrowserDriverHelperAsync,
                                                BrowserDriverHelperSync)
 from src.helpers.screenshot_helper import ScreenshotHelper
 from src.helpers.logger_helper import LoggerHelper
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+@pytest.fixture(scope="session")
+def base_url():
+    url = os.getenv("BASE_URL")
+    if not url:
+        raise ValueError("BASE_URL is not set in environment.")
+    return url
 
 
 @dataclass
@@ -20,11 +31,15 @@ class Credentials:
 def get_credentials():
     user_email = os.getenv("QA_USERNAME")
     user_pwd = os.getenv("QA_PWD")
+    print(f'this is the user mail= {user_email}')
+
 
     if not user_email or not user_pwd:
         raise ValueError(
-            "QA_USERNAME and QA_PWD must be set in .env or Jenkins environment."
+                        print(f"User email: {user_email}")
+
         )
+
 
     return Credentials(username=user_email, password=user_pwd)
 

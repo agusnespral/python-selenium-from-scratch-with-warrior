@@ -10,7 +10,7 @@ pytest-rerunfailures>=11.1.2 # Retry failed tests
 pytest-asyncio>=0.20.0       # Async driver
 
 # === Environment configuration ===
-python-dotenv>=1.0.0         # Load environment variables from .env file
+python-dotenv>=1.0.0         # Load environment variables from .env.stg file
 
 # === Logging and debugging (optional but useful) ===
 loguru>=0.7.2                # Elegant logging with minimal setup

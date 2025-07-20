@@ -13,16 +13,16 @@ class BrowserDriverHelperSync:
     def __init__(self):
         """
 
-        Load .env only if not running in Jenkins
+        Load .env.stg only if not running in Jenkins
         if not os.getenv("JENKINS_HOME"):
-            load_dotenv()  # Load environment variables from .env file
+            load_dotenv()  # Load environment variables from .env.stg file
 
         # Set credentials from environment
         self.user_email = os.getenv("QA_USERNAME")
         self.user_pwd = os.getenv("QA_PWD")
         if not self.user_email or not self.user_pwd:
             raise ValueError(
-                "QA_EMAIL and QA_PWD must be set in .env or Jenkins environment."
+                "QA_EMAIL and QA_PWD must be set in .env.stg or Jenkins environment."
             )
         """
 

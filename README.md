@@ -24,3 +24,4 @@ commits), create .pre-commit-config.yaml and run pre-commit install
 13. add markers to pytest.ini
     add marker to test case @pytest.mark.smoke
     run pytest -m smoke
+14. create a load_env helper to load the env from config.yml and add to conftest.py
