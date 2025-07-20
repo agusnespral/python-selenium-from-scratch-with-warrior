@@ -21,4 +21,6 @@ commits), create .pre-commit-config.yaml and run pre-commit install
     Generate the report:
     allure serve allure-results
     (this launches a local server with the interactive report)
-13. 
+13. add markers to pytest.ini
+    add marker to test case @pytest.mark.smoke
+    run pytest -m smoke
