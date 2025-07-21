@@ -16,7 +16,8 @@ def set_env():
         env_file = os.path.abspath(
             os.path.join(os.path.dirname(__file__), f"../../.env.{env}"))
 
-        load_dotenv(dotenv_path=env_file)
+        dotenv_path = load_dotenv(dotenv_path=env_file)
+        print(dotenv_path)
 
         logger = LoggerHelper.get_instance()
         env_capital = env.upper()

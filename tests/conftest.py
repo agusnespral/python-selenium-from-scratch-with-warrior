@@ -6,6 +6,7 @@ import pytest_asyncio
 
 from src.helpers.browser_driver_helper import (BrowserDriverHelperAsync,
                                                BrowserDriverHelperSync)
+from src.helpers.remote_driver_helper import GridDriverHelper
 from src.helpers.screenshot_helper import ScreenshotHelper
 from src.helpers.logger_helper import LoggerHelper
 from src.helpers.load_env_helper import set_env
@@ -38,18 +39,27 @@ def get_credentials():
         raise ValueError(
             "QA_EMAIL and QA_PWD must be set in .env.stg")
 
-
-
-
     return Credentials(username=user_email, password=user_pwd)
 
 
+def pytest_addoption(parser):
+    parser.addoption("--grid", action="store_true", help="Run tests using Selenium Grid")
+
 @pytest.fixture(scope="function")
-def browser_sync():
-    helper = BrowserDriverHelperSync()
-    driver = helper.get_driver()
-    yield driver
-    helper.quit_driver()
+def browser_sync(request, logger):
+    logger = LoggerHelper.get_instance()
+    use_grid = request.config.getoption("--grid")
+    if use_grid:
+        driver = GridDriverHelper().get_driver()
+        logger.info("Using Selenium Grid")
+        yield driver
+        driver.quit()
+    else:
+        helper = BrowserDriverHelperSync()
+        driver = helper.get_driver()
+        logger.info("Using local browser")
+        yield driver
+        helper.quit_driver()
 
 
 @pytest_asyncio.fixture(scope="function")
@@ -58,6 +68,9 @@ async def browser_async():
     await helper.get_driver()
     yield helper.driver
     await helper.quit_driver()
+
+
+
 
 
 @pytest.fixture(scope="function")

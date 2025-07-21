@@ -1,9 +1,9 @@
 # === Core Selenium dependencies ===
-selenium>=4.12.0             # Web automation library
+selenium>=4.34.2             # Web automation library
 webdriver-manager>=4.0.0     # Automatically handles browser driver downloads
 
 # === Testing framework ===
-pytest>=7.4.0                # Test runner
+pytest>=8.1.1              # Test runner
 pytest-xdist>=3.3.1          # Parallel test execution
 pytest-html>=3.2.0           # Generates HTML test reports
 pytest-rerunfailures>=11.1.2 # Retry failed tests

@@ -25,3 +25,11 @@ commits), create .pre-commit-config.yaml and run pre-commit install
     add marker to test case @pytest.mark.smoke
     run pytest -m smoke
 14. create a load_env helper to load the env from config.yml and add to conftest.py
+15. selenium grid setup. run distributed tests.
+    create docker-compose.yml
+    add --grid addoptions and grid option to browser in conftest
+    start grid with docker: docker-compose up -d
+    run tests with pytest --grid 
+    docker-compose down -v
+
+    
