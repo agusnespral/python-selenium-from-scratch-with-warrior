@@ -1,21 +1,16 @@
 import asyncio
-import os
 
 import pytest
-from dotenv import load_dotenv
 
 from src.main.pages.login_page import LoginPage
 
-# Load environment variables from a .env.stg file into the system environment variables
-load_dotenv()
 
-base_url = os.getenv("BASE_URL")
-
-
-def test_login(browser_sync, get_credentials, screenshot_helper, ):
+@pytest.mark.smoke
+def test_login(browser_sync, get_credentials, screenshot_helper, base_url):
 
     user = get_credentials.username
     pwd = get_credentials.password
+    base_url = base_url.url
     browser_sync.get(base_url)
     login_page = LoginPage(browser_sync)
     login_page.submit_login(user, pwd)

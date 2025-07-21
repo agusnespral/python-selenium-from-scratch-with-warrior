@@ -8,10 +8,10 @@ from src.helpers.browser_driver_helper import (BrowserDriverHelperAsync,
                                                BrowserDriverHelperSync)
 from src.helpers.screenshot_helper import ScreenshotHelper
 from src.helpers.logger_helper import LoggerHelper
-from dotenv import load_dotenv
+from src.helpers.load_env_helper import set_env
 
 
-load_dotenv()
+set_env()
 
 @pytest.fixture(scope="session")
 def base_url():
@@ -36,9 +36,9 @@ def get_credentials():
 
     if not user_email or not user_pwd:
         raise ValueError(
-                        print(f"User email: {user_email}")
+            "QA_EMAIL and QA_PWD must be set in .env.stg")
 
-        )
+
 
 
     return Credentials(username=user_email, password=user_pwd)

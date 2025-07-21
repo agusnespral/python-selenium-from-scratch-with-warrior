@@ -20,9 +20,8 @@ def set_env():
 
         logger = LoggerHelper.get_instance()
         env_capital = env.upper()
-        logger.info(f"Current environment: {env_capital}")
 
-
+        logger.info(f"Environment: {env_capital}")
 
 
 set_env()
