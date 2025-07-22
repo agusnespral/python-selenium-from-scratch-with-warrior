@@ -11,18 +11,20 @@ def set_env():
     )
     with open(config_path, "r") as file:
         config = yaml.safe_load(file)
-        env = config.get("env", "stg")
 
-        env_file = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), f"../../.env.{env}"))
+    env_from_shell = os.getenv("ENV")
+    env_from_yaml = config.get("env", "stg")
+    env = env_from_shell or env_from_yaml
 
-        dotenv_path = load_dotenv(dotenv_path=env_file)
-        print(dotenv_path)
+    env_file = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), f"../../.env.{env}"))
 
-        logger = LoggerHelper.get_instance()
-        env_capital = env.upper()
+    load_dotenv(dotenv_path=env_file)
 
-        logger.info(f"Environment: {env_capital}")
+    logger = LoggerHelper.get_instance()
+    env_capital = env.upper()
+
+    logger.info(f"Environment: {env_capital}")
 
 
 set_env()

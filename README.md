@@ -30,6 +30,7 @@ commits), create .pre-commit-config.yaml and run pre-commit install
     add --grid addoptions and grid option to browser in conftest
     start grid with docker: docker-compose up -d
     run tests with pytest --grid 
-    docker-compose down -v
-
+    docker-compose down 
+16. added support for set env from console
+    ENV=prod pytest...
     

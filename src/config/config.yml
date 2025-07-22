@@ -10,7 +10,7 @@ screenshots:
  format: .png
 
 # Env config (qa, staging, prod)
-env: prod
+env: stg
 
 # This file is meant to be used with the YML helper. End of file
 
