@@ -4,13 +4,23 @@ import random
 
 import yaml
 from selenium import webdriver
+
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
+
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.edge.options import Options as EdgeOptions
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
+
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.edge.service import Service as EdgeService
+
 from src.helpers.logger_helper import LoggerHelper
 
 class BrowserDriverHelperSync:
-    def __init__(self):
+    def __init__(self, browser_override=None):
         """
 
         Load .env.stg only if not running in Jenkins
@@ -34,7 +44,8 @@ class BrowserDriverHelperSync:
 
         # Extract config values
         browser_cfg = self.config["browser"]
-        self.browser_default = browser_cfg["default"]
+        self.browser_default = browser_override or browser_cfg["default"]
+
         self.headless = browser_cfg.get("headless", False)
         self.maximize = browser_cfg.get("maximize", True)
         self.tear_down = browser_cfg.get("tearDown", True)
@@ -67,7 +78,11 @@ class BrowserDriverHelperSync:
                 options.add_argument("--headless=new")
             if self.maximize:
                 options.add_argument("--start-maximized")
-            self.driver = webdriver.Chrome(options=options)
+
+            service = ChromeService(ChromeDriverManager().install())
+            self.logger.info("ChromeDriverManager installed.")
+            return webdriver.Chrome(service=service, options=options)
+
 
         elif self.browser_default == "firefox":
             options = FirefoxOptions()
@@ -78,6 +93,9 @@ class BrowserDriverHelperSync:
             if self.maximize:
                 self.driver.maximize_window()
 
+            service = FirefoxService(GeckoDriverManager().install())
+            return webdriver.Firefox(service=service, options=options)
+
         elif self.browser_default == "edge":
             options = EdgeOptions()
             options.add_argument(f"user-agent={self.user_agent}")
@@ -85,7 +103,9 @@ class BrowserDriverHelperSync:
                 options.add_argument("--headless=new")
             if self.maximize:
                 options.add_argument("--start-maximized")
-            self.driver = webdriver.Edge(options=options)
+
+            service = EdgeService(EdgeChromiumDriverManager().install())
+            return webdriver.Edge(service=service, options=options)
 
         else:
             raise ValueError(f"Unsupported browser: {self.browser_default}")

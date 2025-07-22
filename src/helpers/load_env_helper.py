@@ -1,14 +1,13 @@
 import os
+from pathlib import Path
 import yaml
 from dotenv import load_dotenv
 from src.helpers.logger_helper import LoggerHelper
 
 
 def set_env():
-    config_path = os.path.abspath(
-        os.path.join(os.path.dirname(__file__),
-                     "../config/config.yml")
-    )
+    config_path = Path(__file__).parent.parent / "config"/ "config.yml"
+
     with open(config_path, "r") as file:
         config = yaml.safe_load(file)
 

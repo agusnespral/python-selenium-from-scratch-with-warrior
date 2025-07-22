@@ -3,6 +3,8 @@ from dataclasses import dataclass
 
 import pytest
 import pytest_asyncio
+import yaml
+from pathlib import Path
 
 from src.helpers.browser_driver_helper import (BrowserDriverHelperAsync,
                                                BrowserDriverHelperSync)
@@ -44,18 +46,31 @@ def get_credentials():
 
 def pytest_addoption(parser):
     parser.addoption("--grid", action="store_true", help="Run tests using Selenium Grid")
+    parser.addoption("--browser", action="store",
+                     help="Define browser: chrome, firefox or edge")
 
 @pytest.fixture(scope="function")
 def browser_sync(request, logger):
     logger = LoggerHelper.get_instance()
+
+    config_path = Path(__file__).parent.parent / "src" / "config"/ "config.yml"
+
+    with open(config_path, "r") as f:
+        config = yaml.safe_load(f)
+    default_browser = config.get("browser", "chrome")
+
     use_grid = request.config.getoption("--grid")
+    cli_browser = request.config.getoption("--browser")
+
+    browser = cli_browser if cli_browser else default_browser
+
     if use_grid:
         driver = GridDriverHelper().get_driver()
         logger.info("Using Selenium Grid")
         yield driver
         driver.quit()
     else:
-        helper = BrowserDriverHelperSync()
+        helper = BrowserDriverHelperSync(browser)
         driver = helper.get_driver()
         logger.info("Using local browser")
         yield driver
