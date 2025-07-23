@@ -33,4 +33,6 @@ commits), create .pre-commit-config.yaml and run pre-commit install
     docker-compose down 
 16. added support for set env from console
     ENV=prod pytest...
+17. add --browser addoption
+    --browser=chrome
     

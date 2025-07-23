@@ -30,7 +30,7 @@ class Credentials:
     password: str
 
 
-@pytest.fixture
+
 def get_credentials():
     user_email = os.getenv("QA_USERNAME")
     user_pwd = os.getenv("QA_PWD")

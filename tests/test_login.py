@@ -1,30 +1,36 @@
-import asyncio
-
 import pytest
 
 from src.main.pages.login_page import LoginPage
+from src.helpers.credentials_helper import get_credentials
+from src.helpers.logger_helper import LoggerHelper
+
+
 
 
 @pytest.mark.smoke
-def test_login(browser_sync, get_credentials, screenshot_helper, base_url):
+def test_login(browser_sync, screenshot_helper, base_url):
 
-    user = get_credentials.username
-    pwd = get_credentials.password
+    credentials = get_credentials('valid')
+    user = credentials.username
+    pwd = credentials.password
 
     browser_sync.get(base_url)
     login_page = LoginPage(browser_sync)
     login_page.submit_login(user, pwd)
 
 
-@pytest.mark.asyncio
-async def test_login_async(browser_async, get_credentials):
+def test_invalid_username_login(browser_sync, screenshot_helper, base_url):
 
-    await asyncio.sleep(0)
-    browser_async.get(base_url)
+    credentials = get_credentials('invalid_username')
+    user = credentials.username
+    pwd = credentials.password
 
-    login_page = LoginPage(browser_async)
+    browser_sync.get(base_url)
+    login_page = LoginPage(browser_sync)
+    login_page.submit_login(user, pwd)
 
-    await asyncio.sleep(0)
-    login_page.submit_login(get_credentials.username, get_credentials.password)
+    element = login_page.login_error_message()
+    logger = LoggerHelper.get_instance()
+    logger.info(element.text)
+    assert element.is_displayed()
 
-    await asyncio.sleep(1)
