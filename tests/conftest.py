@@ -53,11 +53,11 @@ def pytest_addoption(parser):
 def browser_sync(request, logger):
     logger = LoggerHelper.get_instance()
 
-    config_path = Path(__file__).parent.parent / "src" / "config"/ "config.yml"
+    config_path = Path(__file__).parent.parent / "src" / "config" / "config.yml"
 
     with open(config_path, "r") as f:
         config = yaml.safe_load(f)
-    default_browser = config.get("browser", "chrome")
+    default_browser = config.get("browser", {}).get("default", "chrome")
 
     use_grid = request.config.getoption("--grid")
     cli_browser = request.config.getoption("--browser")

@@ -110,7 +110,7 @@ class BrowserDriverHelperSync:
         else:
             raise ValueError(f"Unsupported browser: {self.browser_default}")
 
-        return self.driver
+
 
     def quit_driver(self):
         """Closes the browser if tearDown is enabled."""

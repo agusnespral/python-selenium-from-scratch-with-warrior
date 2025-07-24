@@ -1,6 +1,6 @@
 # Browser config
 browser:
- default: chrome # chrome, firefox, edge, remote (Docker needs to be installed locally)
+ default: firefox # chrome, firefox, edge, remote (Docker needs to be installed locally)
  maximize: true # true, false
  seeVNC: true # true, false --> only applicable for remote --> this allows to open a browser and see the test
  mobile: false # true, false
