@@ -3,6 +3,8 @@ import pytest
 from src.main.pages.login_page import LoginPage
 from src.helpers.credentials_helper import get_credentials
 from src.helpers.logger_helper import LoggerHelper
+from src.helpers.browser_driver_helper import BrowserDriverHelperSync
+from src.helpers.auth_helper import get_sso_token, plant_sstok_cookie
 
 
 
@@ -34,3 +36,5 @@ def test_invalid_username_login(browser_sync, screenshot_helper, base_url):
     logger.info(element.text)
     assert element.is_displayed()
 
+def test_auth_login(base_url):
+    plant_sstok_cookie(base_url)

@@ -1,6 +1,6 @@
 # Browser config
 browser:
- default: firefox # chrome, firefox, edge, remote (Docker needs to be installed locally)
+ default: chrome # chrome, firefox, edge, remote (Docker needs to be installed locally)
  maximize: true # true, false
  seeVNC: true # true, false --> only applicable for remote --> this allows to open a browser and see the test
  mobile: false # true, false
@@ -10,7 +10,7 @@ screenshots:
  format: .png
 
 # Env config (qa, staging, prod)
-env: stg
+env: prod
 
 # This file is meant to be used with the YML helper. End of file
 

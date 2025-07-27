@@ -23,6 +23,11 @@ def base_url():
         raise ValueError("BASE_URL is not set in environment.")
     return url
 
+def auth_url():
+    url = os.getenv("AUTH_URL")
+    if not url:
+        raise ValueError("AUTH_URL is not set in environment.")
+    return url
 
 @dataclass
 class Credentials:
